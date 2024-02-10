@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,33 +9,33 @@ datasource db {
 
 model User {
   id                       Int       @id @default(autoincrement())
-  first_name               String?
-  last_name                String
-  email                    String?   @unique
-  password                 String?
-  profile                  Profile?
+  first_name               String
+  last_name                String?
+  email                    String    @unique
+  password                 String
   role                     Role      @default(USER)
-  posts                    Post[]
-  likes                    Like[]
-  comments                 Comment[]
-  stories                  Story[]
   isActive                 Boolean   @default(true)
   createdAt                DateTime  @default(now())
   updatedAt                DateTime  @updatedAt
-  emailVerified            Boolean   @default(false)
+  passwordResetToken       String?
+  passwordResetTokenExpire String?
   emailVerificationToken   String?   @unique
-  passwordResetToken       String
-  passwordResetTokenExpire String
+  emailVerified            Boolean   @default(false)
+  comments                 Comment[]
+  likes                    Like[]
+  posts                    Post[]
+  profile                  Profile?
+  stories                  Story[]
 }
 
 model Profile {
   id      Int     @id @default(autoincrement())
   userId  Int     @unique
-  user    User    @relation(fields: [userId], references: [id])
   bio     String
   image   String?
   city    String
   website String?
+  user    User    @relation(fields: [userId], references: [id])
 }
 
 model Post {
@@ -47,27 +44,27 @@ model Post {
   title         String?
   content       String?
   image         String
-  likes         Like[]
   likesCount    Int?
-  comments      Comment[]
   commentsCount Int?
   privacy       privacy   @default(FOLLOWERS)
-  author        User?     @relation(fields: [userId], references: [id])
+  comments      Comment[]
+  likes         Like[]
+  author        User      @relation(fields: [userId], references: [id])
 }
 
 model Story {
   id      Int     @id @unique @default(autoincrement())
   userId  Int
   image   String
-  user    User    @relation(fields: [userId], references: [id])
   privacy privacy @default(FOLLOWERS)
+  user    User    @relation(fields: [userId], references: [id])
 }
 
 model Like {
   postId Int
   userId Int
-  User   User @relation(fields: [userId], references: [id])
   Post   Post @relation(fields: [postId], references: [id])
+  User   User @relation(fields: [userId], references: [id])
 
   @@id([postId, userId])
 }
@@ -75,8 +72,8 @@ model Like {
 model Comment {
   postId Int
   userId Int
-  User   User @relation(fields: [userId], references: [id])
   Post   Post @relation(fields: [postId], references: [id])
+  User   User @relation(fields: [userId], references: [id])
 
   @@id([postId, userId])
 }
