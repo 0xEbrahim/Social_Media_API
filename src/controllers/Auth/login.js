@@ -5,6 +5,13 @@ import { comparePassword } from "../../utils/hashingPassword.js";
 import { createAccessToken, createRefreshToken } from "../../utils/createToken.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    Users use email and password to login
+ * @method  post
+ * @route   /api/v1/auth/login
+ * @access  public
+ */
+
 const login = asyncHandler(async (req, res, next) => {
     const {email, password} = req.body;
     const user = await prisma.user.findUnique({where : {email : email}})

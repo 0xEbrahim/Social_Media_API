@@ -12,7 +12,7 @@ const refresh = asyncHandler(async (req, res, next) => {
   if (!refreshToken) return next(new APIError("refresh Token is expired.", 403));
   const decodedToken = await verifyRefreshToken(refreshToken);
   const user = await prisma.user.findUnique({
-    where: { id: decodedToken.userId },
+    where: { id: decodedToken.id },
   });
   if (!user) return next(new APIError("You are not allowed.", 401));
   const accessToken = await createAccessToken(user.id);
