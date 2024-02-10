@@ -5,10 +5,11 @@ import { verifyAccessToken } from "../utils/createToken.js";
 const prisma = new PrismaClient();
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
-  const encodedToken = req.headers["authorization"].split(" ")[1];
+  const token = req.headers["authorization"];
+  if (!token) return next(new APIError("Header not found", 400));
+  const encodedToken = token.split(" ")[1];
   if (!encodedToken) return next(new APIError("Token not found", 403));
   const decodedToken = await verifyAccessToken(encodedToken);
-  console.log(decodedToken);
   const user = await prisma.user.findUnique({ where: { id: decodedToken.id } });
   if (!user) return next(new APIError("You are not allowed.", 401));
   req.user = user;

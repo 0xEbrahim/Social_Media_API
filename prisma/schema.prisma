@@ -26,8 +26,18 @@ model User {
   posts                    Post[]
   profile                  Profile?
   stories                  Story[]
+  followers                FollowRelation[] @relation(name: "followed")
+  following                FollowRelation[] @relation(name: "follower")
 }
 
+model FollowRelation {
+  followedId     Int
+  followerId     Int
+  followed       User @relation(name: "followed", fields: [followedId], references: [id])
+  follower       User @relation(name: "follower", fields: [followerId], references: [id])
+
+  @@id([followedId, followerId])
+}
 model Profile {
   id      Int     @id @default(autoincrement())
   userId  Int     @unique
@@ -77,6 +87,8 @@ model Comment {
 
   @@id([postId, userId])
 }
+
+
 
 enum Role {
   USER
