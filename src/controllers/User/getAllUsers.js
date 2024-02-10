@@ -3,6 +3,12 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    admin lists all user
+ * @method  get
+ * @route   /api/v1/user/
+ * @access  private
+ */
 export const getAllUsers = asyncHandler(async (req, res, next) => {
   const query = req.query;
   const limit = +query.limit || 10;

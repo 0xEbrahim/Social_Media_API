@@ -7,6 +7,12 @@ import {
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    generate refresh token
+ * @method  get
+ * @route   /api/v1/auth/refresh
+ * @access  public
+ */
 const refresh = asyncHandler(async (req, res, next) => {
   const refreshToken = req?.cookies?.refreshToken;
   if (!refreshToken) return next(new APIError("refresh Token is expired.", 403));

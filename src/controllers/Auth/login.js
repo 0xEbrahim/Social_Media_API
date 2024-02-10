@@ -11,7 +11,6 @@ const prisma = new PrismaClient();
  * @route   /api/v1/auth/login
  * @access  public
  */
-
 const login = asyncHandler(async (req, res, next) => {
     const {email, password} = req.body;
     const user = await prisma.user.findUnique({where : {email : email}})
