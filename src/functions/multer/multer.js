@@ -9,7 +9,8 @@ const __dirname = path.dirname(__filename);
 const storage = multer.diskStorage({
   destination: (req, __, callback) => {
     const { baseUrl } = req;
-    const isProfilePic = baseUrl === "/api/v1/user";
+    const isProfilePic =
+      baseUrl === "/api/v1/user" || baseUrl === "/api/v1/auth";
     const isPost = baseUrl === "/api/v1/post";
     const isStory = baseUrl === "/api/v1/story";
     callback(
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(
       null,
-      req.user.id +
+      Math.random() * Date.now() +
         "_" +
         parseInt(
           Math.ceil(Math.random() * Date.now())
@@ -39,15 +40,18 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  if(file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/jpg")
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg"
+  )
     cb(null, true);
-  else
-  cb({message : "Unsupported file format"}, false);
-}
+  else cb({ message: "Unsupported file format" }, false);
+};
 const uploadSinglePhoto = multer({
   storage,
   limits: { fileSize: 30 * 1024 * 1024 },
-  fileFilter
+  fileFilter,
 }).single("image");
 
 const uploadMultiPhotos = multer({
