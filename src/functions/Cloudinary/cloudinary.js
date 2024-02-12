@@ -20,4 +20,5 @@ const cloudinaryUpload = (file) => {
   });
 };
 
-export default cloudinaryUpload;
+const uploader = async(path) => cloudinaryUpload(path, "image");
+export default uploader;

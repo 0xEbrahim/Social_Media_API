@@ -13,6 +13,12 @@ export const getAllUsers = asyncHandler(async (req, res, next) => {
   const limit = +query.limit || 10;
   const page = +query.page || 1;
   const skip = (page - 1) * limit;
-  const allUsers = await prisma.user.findMany({ skip: skip, take: limit });
+  const allUsers = await prisma.user.findMany({
+    skip: skip,
+    take: limit,
+    include: {
+      profile: true,
+    },
+  });
   res.status(200).json(allUsers);
 });

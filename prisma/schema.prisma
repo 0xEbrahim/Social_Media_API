@@ -11,7 +11,7 @@ model User {
   id                       Int       @id @default(autoincrement())
   first_name               String
   last_name                String?
-  email                    String    @unique
+  email                    String    @unique  
   password                 String
   role                     Role      @default(USER)
   isActive                 Boolean   @default(true)
@@ -31,12 +31,11 @@ model User {
 }
 
 model FollowRelation {
+  id             Int      @id   @default(autoincrement())
   followedId     Int
   followerId     Int
   followed       User @relation(name: "followed", fields: [followedId], references: [id])
   follower       User @relation(name: "follower", fields: [followerId], references: [id])
-
-  @@id([followedId, followerId])
 }
 model Profile {
   id      Int     @id @default(autoincrement())
