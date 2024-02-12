@@ -4,3 +4,4 @@ export { getSingleUser } from "./getSingleUser.js";
 export { getAllUsers } from "./getAllUsers.js";
 export { changePassword } from "./changePassword.js";
 export { updateCurrentUser } from "./updateCurrentUser.js";
+export { searchForUsers } from "./searchForUsers.js";

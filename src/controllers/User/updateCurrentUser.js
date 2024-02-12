@@ -18,15 +18,14 @@ export const updateCurrentUser = asyncHandler(async (req, res, next) => {
     req.body.image = uploadedAvatar.url;
     fs.unlinkSync(avatar);
   }
-  const { firstName, lastName, email, city, website, image } = req.body;
+  const { name, email, city, website, image } = req.body;
   console.log(req.user.id);
   const updatedUser = await prisma.user.update({
     where: {
       id: +req.user.id,
     },
     data: {
-      first_name: firstName,
-      last_name: lastName,
+      name : name,
       email: email,
       profile: {
         update: {

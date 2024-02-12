@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
  * @access  public
  */
 const register = asyncHandler(async (req, res, next) => {
-  const { firstName, lastName, email, password, bio, city, website } =
+  const { name, email, password, bio, city, website } =
     req.body;
     const role = req.body.role || "USER";
   const avatar = req.file?.path;
@@ -21,8 +21,7 @@ const register = asyncHandler(async (req, res, next) => {
   fs.unlinkSync(avatar);
   const user = await prisma.user.create({
     data: {
-      first_name: firstName,
-      last_name: lastName,
+      name:name,
       email: email,
       password: hashedPassword,
       role: role,
