@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.get("/", authMiddleware, isAdmin, getAllUsers);
 router.get("/:id", authMiddleware, isAdmin, getSingleUser);
+
 router.patch("/", authMiddleware, updateUser);
 router.patch("/change-password", authMiddleware, changePassword);
 router.delete("/:id", authMiddleware, isAdmin, deleteUser);
