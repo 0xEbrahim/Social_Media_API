@@ -16,7 +16,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.9",
     "pg": "^8.11.3",
-    "prisma": "^5.9.1"
+    "prisma": "^5.9.1",
+    "sharp": "^0.33.2"
   },
   "name": "full-app",
   "version": "1.0.0",

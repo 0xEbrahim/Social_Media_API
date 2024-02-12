@@ -38,14 +38,21 @@ const storage = multer.diskStorage({
   },
 });
 
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/jpg")
+    cb(null, true);
+  else
+  cb({message : "Unsupported file format"}, false);
+}
 const uploadSinglePhoto = multer({
   storage,
   limits: { fileSize: 30 * 1024 * 1024 },
-}).single("img");
+  fileFilter
+}).single("image");
 
 const uploadMultiPhotos = multer({
   storage,
   limits: { fileSize: 30 * 1024 * 1024 },
-}).array();
+}).array("image");
 
 export { uploadMultiPhotos, uploadSinglePhoto };

@@ -1,7 +1,23 @@
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "cloudinary";
 
 cloudinary.config({
-  cloud_name: "",
-  api_key: "",
-  api_secret: "",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_SECRETS,
 });
+
+const cloudinaryUpload = (file) => {
+  return new Promise((resolve) => {
+    cloudinary.uploader.upload(file, (result) => {
+      resolve({
+          url: result.url,
+        },
+        {
+          resource_type: "auto",
+        }
+      );
+    });
+  });
+};
+
+export default cloudinaryUpload;
