@@ -19,10 +19,10 @@ const createPost = asyncHandler(async (req, res, next) => {
     req.urls = urls;
   }
   const { urls } = req;
-
+  
   const newPost = await prisma.post.create({
     data: {
-      userId: req.user.id,
+      userId: +req.user.id,
       title: title,
       content: content,
       privacy: privacy,

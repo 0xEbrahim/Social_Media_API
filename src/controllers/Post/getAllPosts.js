@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
-import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
 const getAllPosts = asyncHandler(async (req, res, next) => {
@@ -12,6 +11,14 @@ const getAllPosts = asyncHandler(async (req, res, next) => {
     take: limit,
     orderBy: {
       postedAt: "desc",
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
     },
   });
   res.status(200).json({ status: "Success", data: posts });
