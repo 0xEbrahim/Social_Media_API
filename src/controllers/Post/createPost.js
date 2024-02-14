@@ -12,16 +12,14 @@ const createPost = asyncHandler(async (req, res, next) => {
     const urls = [];
     for (let file of img) {
       const { path } = file;
-      //console.log("Path => ", path);
       const newPath = await uploader(path);
-      //console.log("newPath => ", newPath);
       urls.push(newPath.url);
       fs.unlinkSync(path);
     }
     req.urls = urls;
   }
   const { urls } = req;
-  //console.log("URLS => ", urls);
+
   const newPost = await prisma.post.create({
     data: {
       userId: req.user.id,
