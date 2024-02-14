@@ -52,11 +52,13 @@ model Profile {
 model Post {
   id            Int       @id @unique @default(autoincrement())
   userId        Int
-  title         String?
-  content       String?
-  image         String
-  likesCount    Int?
-  commentsCount Int?
+  title         String
+  content       String
+  image         String[]  
+  likesCount    Int       @default(0)
+  commentsCount Int       @default(0)
+  postedAt      DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   privacy       privacy   @default(FOLLOWERS)
   comments      Comment[]
   likes         Like[]
