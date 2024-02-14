@@ -9,6 +9,7 @@ import {
   forgotPassword,
   verifyResetPassword,
   resetPassword,
+  verifyEmail,
 } from "../controllers/Auth/Auth.index.js";
 import { uploadSinglePhoto } from "../functions/multer/multer.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
@@ -21,4 +22,5 @@ router.get("/forgot-password", forgotPassword);
 router.patch("/verify-reset-token", verifyResetPassword);
 router.patch("/reset-password", resetPassword);
 router.patch("/change-password", authMiddleware, changePassword);
+router.get("/verfiy/:token", verifyEmail);
 export default router;
