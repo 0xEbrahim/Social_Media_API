@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
-import APIError from "../../utils/APIError.js";
 import { hashPassword } from "../../utils/hashingPassword.js";
 const prisma = new PrismaClient();
 
