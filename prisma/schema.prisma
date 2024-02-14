@@ -8,34 +8,37 @@ datasource db {
 }
 
 model User {
-  id                       Int       @id @default(autoincrement())
-  name                     String
-  email                    String    @unique  
-  password                 String
-  role                     Role      @default(USER)
-  isActive                 Boolean   @default(true)
-  createdAt                DateTime  @default(now())
-  updatedAt                DateTime  @updatedAt
-  passwordResetToken       String?
-  passwordResetTokenExpire String?
-  emailVerificationToken   String?   @unique
-  emailVerified            Boolean   @default(false)
-  comments                 Comment[]
-  likes                    Like[]
-  posts                    Post[]
-  profile                  Profile?
-  stories                  Story[]
-  followers                FollowRelation[] @relation(name: "followed")
-  following                FollowRelation[] @relation(name: "follower")
+  id                        Int              @id @default(autoincrement())
+  name                      String
+  email                     String           @unique
+  password                  String
+  role                      Role             @default(USER)
+  isActive                  Boolean          @default(true)
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @updatedAt
+  passwordResetToken        String?
+  passwordResetTokenVerfied Boolean?
+  passwordResetTokenExpire  String?
+  passwordChangedAt         String?
+  emailVerificationToken    String?          @unique
+  emailVerified             Boolean          @default(false)
+  comments                  Comment[]
+  likes                     Like[]
+  posts                     Post[]
+  profile                   Profile?
+  stories                   Story[]
+  followers                 FollowRelation[] @relation(name: "followed")
+  following                 FollowRelation[] @relation(name: "follower")
 }
 
 model FollowRelation {
-  id             Int      @id   @default(autoincrement())
-  followedId     Int
-  followerId     Int
-  followed       User @relation(name: "followed", fields: [followedId], references: [id])
-  follower       User @relation(name: "follower", fields: [followerId], references: [id])
+  id         Int  @id @default(autoincrement())
+  followedId Int
+  followerId Int
+  followed   User @relation(name: "followed", fields: [followedId], references: [id])
+  follower   User @relation(name: "follower", fields: [followerId], references: [id])
 }
+
 model Profile {
   id      Int     @id @default(autoincrement())
   userId  Int     @unique
@@ -85,8 +88,6 @@ model Comment {
 
   @@id([postId, userId])
 }
-
-
 
 enum Role {
   USER

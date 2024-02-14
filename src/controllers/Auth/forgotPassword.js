@@ -15,7 +15,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
   if (!user)
     return next(new APIError(`User not found for email : ${email}`), 404);
   const plainResetToken = crypto.randomBytes(64).toString("hex");
-  const hashedResetToken = crypto
+  const hashedResetToken = await crypto
     .createHash("sha256")
     .update(plainResetToken)
     .digest("hex");

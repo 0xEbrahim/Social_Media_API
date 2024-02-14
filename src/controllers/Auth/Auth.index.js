@@ -4,3 +4,5 @@ export { logout } from "./logout.js";
 export { refresh } from "./refeshToken.js";
 export { forgotPassword } from "./forgotPassword.js";
 export { changePassword } from "./changePassword.js";
+export { verifyResetPassword } from "./verfiyResetPassword.js";
+export { resetPassword } from "./resetPassword.js";
