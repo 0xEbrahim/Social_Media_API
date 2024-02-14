@@ -18,9 +18,9 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 
 const isAdmin = asyncHandler(async (req, res, next) => {
   const user = req.user;
-  if (!user) return next(new APIError("You are not allowed.", 401));
+  if (!user) return next();
   const role = user.role;
-  if (role != "ADMIN") return next("You are not an admin", 403);
+  if (role !== "ADMIN") return next(new APIError("You are not admin.", 403));
   next();
 });
 
