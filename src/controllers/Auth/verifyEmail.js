@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 import crypto from "crypto";
 import APIError from "../../utils/APIError.js";
-import { sendEmailToUser } from "../../functions/Mail/email.config.js";
 const prisma = new PrismaClient();
 
 const verifyEmail = asyncHandler(async (req, res, next) => {
