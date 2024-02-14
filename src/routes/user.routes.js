@@ -10,7 +10,6 @@ import {
 } from "../controllers/User/user.index.js";
 import { uploadSinglePhoto } from "../functions/multer/multer.js";
 import { authMiddleware, isAdmin } from "../middlewares/auth.middleware.js";
-
 const router = express.Router();
 
 router.get("/", authMiddleware, isAdmin, getAllUsers);
