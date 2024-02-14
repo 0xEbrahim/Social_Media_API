@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  changePassword,
   deleteUser,
   getAllUsers,
   getSingleUser,
@@ -17,7 +16,6 @@ router.get("/search", authMiddleware, searchForUsers);
 router.get("/:id", authMiddleware, isAdmin, getSingleUser);
 router.patch("/", authMiddleware, uploadSinglePhoto, updateCurrentUser);
 router.patch("/:id", authMiddleware, isAdmin, uploadSinglePhoto, updateUser);
-router.patch("/change-password", authMiddleware, changePassword);
 router.delete("/:id", authMiddleware, isAdmin, deleteUser);
 
 export default router;
