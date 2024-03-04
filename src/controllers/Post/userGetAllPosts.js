@@ -10,10 +10,11 @@ const getUserPosts = asyncHandler(async (req, res, next) => {
   const posts = await prisma.post.findMany({
     where: {
       userId: +req.user.id,
-      privacy: privacy
+      privacy: privacy,
     },
     skip: skip,
     take: limit,
+    privacy: "PUBLIC",
     orderBy: {
       postedAt: "desc",
     },

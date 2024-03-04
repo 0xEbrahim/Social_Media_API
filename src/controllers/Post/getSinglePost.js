@@ -8,6 +8,7 @@ const getSinglePost = asyncHandler(async (req, res, next) => {
   const userId = +req.user.id;
   const post = await prisma.post.findUnique({
     where: {
+      privacy: "PUBLIC",
       id: id,
     },
   });

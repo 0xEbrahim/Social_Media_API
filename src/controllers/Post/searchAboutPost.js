@@ -12,6 +12,7 @@ const searchAboutPost = asyncHandler(async (req, res, next) => {
   let sortObj = { [sort]: sortDir };
   const search = await prisma.post.findMany({
     where: {
+      privacy: "PUBLIC",
       OR: [
         {
           title: {

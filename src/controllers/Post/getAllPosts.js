@@ -9,6 +9,7 @@ const getAllPosts = asyncHandler(async (req, res, next) => {
   const posts = await prisma.post.findMany({
     skip: skip,
     take: limit,
+    
     orderBy: {
       postedAt: "desc",
     },

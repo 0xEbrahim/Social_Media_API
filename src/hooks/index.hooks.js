@@ -3,11 +3,13 @@ import authRouter from "../routes/auth.routes.js";
 import userRouter from "../routes/user.routes.js";
 import postRouter from "../routes/post.routes.js";
 import followRouter from "../routes/follow.routes.js";
+import storyRouter from "../routes/story.routes.js";
 export default (app) => {
   app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/user", userRouter);
   app.use("/api/v1/post", postRouter);
   app.use("/api/v1/follow", followRouter);
+  app.use("/api/v1/story", storyRouter);
   app.all("*", notFound);
   app.use(errorHandler);
 };
