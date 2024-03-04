@@ -6,6 +6,7 @@ import {
   getAllPosts,
   getSinglePost,
   getUserPosts,
+  searchAboutPost,
   updatePost,
 } from "../controllers/Post/post.index.js";
 import { uploadMultiPhotos } from "../functions/multer/multer.js";
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.post("/create-post", authMiddleware, uploadMultiPhotos, createPost);
 router.get("/", authMiddleware, isAdmin, getAllPosts);
+router.get("/search", authMiddleware, searchAboutPost);
 router.get("/my-posts", authMiddleware, getUserPosts);
 router.get("/:id", authMiddleware, getSinglePost);
 router.patch("/:Pid", authMiddleware, uploadMultiPhotos, updatePost);
