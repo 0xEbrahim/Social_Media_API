@@ -17,6 +17,18 @@ const adminDeletePost = asyncHandler(async (req, res, next) => {
       id: postId,
     },
   });
+  await prisma.$transaction([
+    prisma.comment.deleteMany({
+      where: {
+        postId: postId,
+      },
+    }),
+    prisma.like.deleteMany({
+      where: {
+        postId: postId,
+      },
+    }),
+  ]);
   res.status(200).json({
     status: "Success",
     message: "Post has been deleted",
