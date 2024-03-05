@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 /**
  * @desc    User can Like or unlike any available post
  * @method  POST 
- * @route   /api/v1/:pId
+ * @route   /api/v1/like/:pId
  */
 
 const likeOrUnLike = asyncHandler(async (req, res, next) => {

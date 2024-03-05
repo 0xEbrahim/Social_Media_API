@@ -5,6 +5,11 @@ import fs from "fs";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    Create post
+ * @method  POST  
+ * @route   /api/v1/post/create-post
+ */
 const createPost = asyncHandler(async (req, res, next) => {
   const { title, content, privacy } = req.body;
   const img = req.files;

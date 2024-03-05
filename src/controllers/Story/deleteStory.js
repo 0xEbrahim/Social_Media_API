@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    USER can delete a story
+ * @method  DELETE
+ * @route   /api/v1/story/:sId
+ */
 const deleteStory = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const storyId = +req.params.sId;

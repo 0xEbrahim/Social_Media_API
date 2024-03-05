@@ -3,6 +3,12 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+
+/**
+ * @desc    GET SINGLE POST
+ * @method  GET   
+ * @route   /api/v1/post/:id
+ */
 const getSinglePost = asyncHandler(async (req, res, next) => {
   const id = +req.params.id;
   const userId = +req.user.id;

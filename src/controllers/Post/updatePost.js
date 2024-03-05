@@ -5,6 +5,12 @@ import uploader from "../../functions/Cloudinary/cloudinary.js";
 import fs from "fs";
 const prisma = new PrismaClient();
 
+
+/**
+ * @desc    User can update his post
+ * @method  PATCH   
+ * @route   /api/v1/post/:id
+ */
 const updatePost = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const postId = +req.params.Pid;

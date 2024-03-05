@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    USER can Update a specific story
+ * @method  PATCH
+ * @route   /api/v1/story/:sId
+ */
 const updateStoryPrivacy = asyncHandler(async (req, res, next) => {
   const storyId = +req.params.sId;
   const newPriv = req.body.privacy;

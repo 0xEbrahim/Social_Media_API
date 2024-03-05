@@ -5,6 +5,11 @@ import APIError from "../../utils/APIError.js";
 import { sendEmailToUser } from "../../functions/Mail/email.config.js";
 const prisma = new PrismaClient();
 
+/**
+ * @DESC    user can ask to change password when forgot
+ * @METHOD  GET
+ * @ROUTE   /api/v1/auth/forgot-password
+ */
 const forgotPassword = asyncHandler(async (req, res, next) => {
   const email = req.body?.email;
   const user = await prisma.user.findUnique({

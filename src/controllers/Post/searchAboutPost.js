@@ -2,6 +2,14 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
+
+
+/**
+ * @desc    User can search about any post
+ * @method  GET   
+ * @route   /api/v1/post/search
+ */
+
 const searchAboutPost = asyncHandler(async (req, res, next) => {
   const { keywords } = req.query;
   const sort = req.query.sort || "updatedAt";

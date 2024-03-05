@@ -2,6 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    User can serach about another user using keywords
+ * @method  GET
+ * @route   /api/v1/user/search?
+ */
 export const searchForUsers = asyncHandler(async (req, res, next) => {
   const { keyword } = req.query;
   const sort = req.query.sort || "updatedAt";

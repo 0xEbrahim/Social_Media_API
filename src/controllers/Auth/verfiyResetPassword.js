@@ -4,6 +4,11 @@ import crypto from "crypto";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    Verify reset password token
+ * @method  PATCH   
+ * @route   /api/v1/auth/verify-reset-token
+ */
 const verifyResetPassword = asyncHandler(async (req, res, next) => {
   const resetToken = req.body.token;
   const hashed = await crypto

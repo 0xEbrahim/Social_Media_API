@@ -2,6 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    List all posts
+ * @method  GET    
+ * @route   /api/v1/post/
+ * @access  ADMIN
+ */
+
 const getAllPosts = asyncHandler(async (req, res, next) => {
   const limit = +req?.query?.limit || 10;
   const page = +req?.query?.page || 1;

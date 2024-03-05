@@ -5,6 +5,11 @@ import APIError from "../../utils/APIError.js";
 import fs from "fs";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    USER can create new story
+ * @method  POST
+ * @route   /api/v1/story/
+ */
 const createStory = asyncHandler(async (req, res, next) => {
   const { privacy } = req.body;
   const img = req.file;

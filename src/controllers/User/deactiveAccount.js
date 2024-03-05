@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    User can deactive/delete his account
+ * @method  DELETE
+ * @route   /api/v1/user/:id
+ */
 const deactiveAccount = asyncHandler(async (req, res, next) => {
   const deletedUser = await prisma.user.delete({
     where: {

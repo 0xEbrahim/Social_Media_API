@@ -4,6 +4,13 @@ import { hashPassword } from "../../utils/hashingPassword.js";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+
+/**
+ * @desc    user can reset his password to another one
+ * @method  PATCH   
+ * @route   /api/v1/auth/reset-password
+ */
+
 const resetPassword = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await prisma.user.findUnique({

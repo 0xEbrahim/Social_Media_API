@@ -3,6 +3,12 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+
+/**
+ * @desc    USER can see a specific story
+ * @method  GET
+ * @route   /api/v1/story/:sId
+ */
 const getSingleStory = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const storyId = +req.params.sId;

@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    USER can see his followings stories
+ * @method  GET
+ * @route   /api/v1/story/
+ */
 const currentUserGetStories = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const limit = +req?.query?.limit || 10;

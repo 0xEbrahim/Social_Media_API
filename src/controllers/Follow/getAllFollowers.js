@@ -2,6 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    List users' followers
+ * @method  GET 
+ * @route   /api/v1/follow/followers
+ */
 const getAllFollowers = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const page = +req.query.page || 1;

@@ -2,6 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    User can Follow or unFollow any another user
+ * @method  POST 
+ * @route   /api/v1/follow/:pId
+ */
 const followOrUn = asyncHandler(async (req, res, next) => {
   const followerId = +req.user.id;
   const followingId = +req.params.userId;

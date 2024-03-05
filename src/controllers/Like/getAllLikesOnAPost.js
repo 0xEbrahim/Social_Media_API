@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 /**
  * @desc    User can get likes to specific post
  * @method  GET 
- * @route   /api/v1/:pId
+ * @route   /api/v1/like/:pId
  * 
  */
 

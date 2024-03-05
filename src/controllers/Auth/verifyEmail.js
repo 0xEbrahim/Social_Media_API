@@ -4,6 +4,11 @@ import crypto from "crypto";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    Verfiy user's email
+ * @method  PATCH
+ * @route   /api/v1/auth/verfiy/:token
+ */
 const verifyEmail = asyncHandler(async (req, res, next) => {
   const token = req.params?.token;
   const hashToken = await crypto
