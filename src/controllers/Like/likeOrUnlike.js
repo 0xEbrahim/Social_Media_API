@@ -3,6 +3,12 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc    User can Like or unlike any available post
+ * @method  POST 
+ * @route   /api/v1/:pId
+ */
+
 const likeOrUnLike = asyncHandler(async (req, res, next) => {
   const postId = +req.params.pId;
   const currentUser = +req.user.id;
@@ -18,7 +24,6 @@ const likeOrUnLike = asyncHandler(async (req, res, next) => {
       },
     },
   });
-  //console.log(followingsList);
   const followingsId = followingsList.map((el) => el.followed.id) ?? [];
   const post = await prisma.post.findFirst({
     where: {
@@ -65,6 +70,16 @@ const likeOrUnLike = asyncHandler(async (req, res, next) => {
     });
     if (!addLike)
       return next(new APIError("Error while liking the post.", 400));
+    await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        likesCount: {
+          increment: 1,
+        },
+      },
+    });
     res
       .status(201)
       .json({ message: `You liked This post ${postId}`, data: addLike });
@@ -81,6 +96,16 @@ const likeOrUnLike = asyncHandler(async (req, res, next) => {
     });
     if (!unLike)
       return next(new APIError("Error while unliking the post.", 400));
+    await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        likesCount: {
+          decrement: 1,
+        },
+      },
+    });
     res.status(200).json({ message: `You unliked this post ${postId}` });
   }
 });
