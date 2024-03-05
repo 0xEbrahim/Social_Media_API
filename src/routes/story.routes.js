@@ -3,6 +3,7 @@ import {
   createStory,
   currentUserGetStories,
   currentUserStories,
+  deleteStory,
   getSingleStory,
   updateStoryPrivacy,
 } from "../controllers/Story/story.index.js";
@@ -15,4 +16,5 @@ router.get("/", authMiddleware, currentUserGetStories);
 router.get("/my-stories", authMiddleware, currentUserStories);
 router.get("/:sId", authMiddleware, getSingleStory);
 router.patch("/:sId", authMiddleware, updateStoryPrivacy);
+router.delete("/:sId", authMiddleware, deleteStory);
 export default router;
