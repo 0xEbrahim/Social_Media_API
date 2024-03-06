@@ -15,7 +15,13 @@ const prisma = new PrismaClient();
  * @access  public
  */
 const register = asyncHandler(async (req, res, next) => {
-  const { name, email, password, bio, city, website } = req.body;
+  const { name,
+     email,
+      password,
+       bio,
+        city,
+         website
+         } = req.body;
   const role = req.body.role || "USER";
   const avatar = req.file?.path;
   const uplaodedImage = await uploader(avatar);

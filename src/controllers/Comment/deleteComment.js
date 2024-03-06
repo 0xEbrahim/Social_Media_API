@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc       User can delete comment
+ * @method     DELETE 
+ * @route      /api/v1/comment/:cId
+ */
 const deleteComment = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const commentId = +req.params.cId;

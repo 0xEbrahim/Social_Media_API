@@ -6,6 +6,11 @@ import {
 } from "../../utils/ValidForActions.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc       User can get ALl comments on any post 
+ * @method     GET 
+ * @route      /api/v1/comment/comments/:pId
+ */
 const getAllCommentsOnAPost = asyncHandler(async (req, res, next) => {
   const postId = +req.params.pId;
   const currentUser = +req.user.id;

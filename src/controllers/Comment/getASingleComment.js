@@ -4,6 +4,12 @@ import APIError from "../../utils/APIError.js";
 import { ValidPostToMakeActions } from "../../utils/ValidForActions.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc       User can get specific comment 
+ * @method     GET 
+ * @route      /api/v1/comment/:cId
+ */
+
 const getASingleComment = asyncHandler(async (req, res, next) => {
   const currentUser = +req.user.id;
   const commentId = +req.params.cId;

@@ -4,6 +4,11 @@ import APIError from "../../utils/APIError.js";
 import { ValidPostToMakeActions } from "../../utils/ValidForActions.js";
 const prisma = new PrismaClient();
 
+/**
+ * @desc       User can create comment
+ * @method     POST 
+ * @route      /api/v1/comment/
+ */
 const createComment = asyncHandler(async (req, res, next) => {
   const postId = +req.params.pId;
   const currentUser = +req.user.id;
