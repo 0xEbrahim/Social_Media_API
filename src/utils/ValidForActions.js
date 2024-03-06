@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 const prisma = new PrismaClient();
 
-const ValidPostToMakeActions = asyncHandler(async (postId, currentUser) => {
+const getAllFollowed = asyncHandler(async (currentUser) => {
   const followingsList = await prisma.followRelation.findMany({
     where: {
       followerId: currentUser,
@@ -16,6 +16,11 @@ const ValidPostToMakeActions = asyncHandler(async (postId, currentUser) => {
     },
   });
   const followingsId = followingsList.map((el) => el.followed.id);
+  return followingsId;
+});
+
+const ValidPostToMakeActions = asyncHandler(async (postId, currentUser) => {
+  const followingsId = await getAllFollowed(currentUser);
   const post = await prisma.post.findFirst({
     where: {
       OR: [
@@ -39,19 +44,7 @@ const ValidPostToMakeActions = asyncHandler(async (postId, currentUser) => {
 });
 
 const ValidStoryToMakeActions = asyncHandler(async (postId, currentUser) => {
-  const followingsList = await prisma.followRelation.findMany({
-    where: {
-      followerId: currentUser,
-    },
-    select: {
-      followed: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
-  const followingsId = followingsList.map((el) => el.followed.id);
+  const followingsId = await getAllFollowed(currentUser);
   const story = await prisma.story.findFirst({
     where: {
       OR: [
@@ -73,4 +66,5 @@ const ValidStoryToMakeActions = asyncHandler(async (postId, currentUser) => {
   });
   return story;
 });
-export { ValidPostToMakeActions, ValidStoryToMakeActions };
+
+export { ValidPostToMakeActions, ValidStoryToMakeActions, getAllFollowed };
