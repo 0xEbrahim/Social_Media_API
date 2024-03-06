@@ -10,7 +10,7 @@ const createComment = asyncHandler(async (req, res, next) => {
   const { content } = req.body;
   const post = await ValidPostToMakeActions(postId, currentUser);
   if (!post)
-    return next(new APIError("We can't reach this comment at this time.", 400));
+    return next(new APIError("We can't reach this Post at this time.", 400));
   const comment = await prisma.comment.create({
     data: {
       postId: postId,
@@ -36,6 +36,16 @@ const createComment = asyncHandler(async (req, res, next) => {
   });
   if (!comment)
     return next(new APIError("Error occured while commenting.", 400));
+  await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      commentsCount: {
+        increment: 1,
+      },
+    },
+  });
   res.status(201).json({ status: "Success", data: comment });
 });
 
