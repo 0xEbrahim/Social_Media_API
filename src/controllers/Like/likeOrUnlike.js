@@ -1,51 +1,20 @@
 import { PrismaClient } from "@prisma/client";
 import asyncHandler from "express-async-handler";
 import APIError from "../../utils/APIError.js";
+import { ValidPostToMakeActions } from "../../utils/ValidForActions.js";
 const prisma = new PrismaClient();
 
 /**
  * @desc    User can Like or unlike any available post
- * @method  POST 
+ * @method  POST
  * @route   /api/v1/like/:pId
  */
 
 const likeOrUnLike = asyncHandler(async (req, res, next) => {
   const postId = +req.params.pId;
   const currentUser = +req.user.id;
-  const followingsList = await prisma.followRelation.findMany({
-    where: {
-      followerId: currentUser,
-    },
-    select: {
-      followed: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
-  const followingsId = followingsList.map((el) => el.followed.id) ?? [];
-  const post = await prisma.post.findFirst({
-    where: {
-      OR: [
-        {
-          id: postId,
-          userId: {
-            in: followingsId,
-          },
-          privacy: {
-            in: ["FOLLOWERS", "PUBLIC"],
-          },
-        },
-        {
-          id: postId,
-          privacy: "PUBLIC",
-        },
-      ],
-    },
-  });
+  const post = await ValidPostToMakeActions(postId, currentUser);
   if (!post) return next(new APIError("Error while liking the post.", 400));
-  //res.json({ data: post });
   const alreadyLiked = await prisma.like.findFirst({
     where: {
       postId: postId,

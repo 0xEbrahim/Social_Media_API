@@ -83,12 +83,12 @@ model Like {
 }
 
 model Comment {
+  id     Int   @unique     @default(autoincrement())
   postId Int
   userId Int
+  content String
   Post   Post @relation(fields: [postId], references: [id])
   User   User @relation(fields: [userId], references: [id])
-
-  @@id([postId, userId])
 }
 
 enum Role {
