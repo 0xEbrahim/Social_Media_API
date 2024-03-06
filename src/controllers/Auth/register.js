@@ -15,18 +15,16 @@ const prisma = new PrismaClient();
  * @access  public
  */
 const register = asyncHandler(async (req, res, next) => {
-  const { name,
-     email,
-      password,
-       bio,
-        city,
-         website
-         } = req.body;
+  const { name, email, password, bio, city, website } = req.body;
   const role = req.body.role || "USER";
-  const avatar = req.file?.path;
-  const uplaodedImage = await uploader(avatar);
+  let avatar = req.file?.path, uplaodedImage;
+  console.log(avatar)
+  if (avatar) {
+    avatar = req.file.path;
+    uplaodedImage = await uploader(avatar);
+    fs.unlinkSync(avatar)
+  }
   const hashedPassword = await hashPassword(password);
-  fs.unlinkSync(avatar);
   const user = await prisma.user.create({
     data: {
       name: name,
@@ -36,7 +34,7 @@ const register = asyncHandler(async (req, res, next) => {
       profile: {
         create: {
           bio: bio,
-          image: uplaodedImage.url,
+          image: uplaodedImage ? uplaodedImage.url : null,
           city: city,
           website: website,
         },
@@ -69,7 +67,7 @@ const register = asyncHandler(async (req, res, next) => {
     subject: "Email verfication",
     text: "Verfiy you email",
     htm: `<h1>Email verfication </h1>
-          <p>Please follow this link to verfiy your account. </p><a href= 'http://localhost:3000/api/v1/auth/verfiy/${plainVerfiyToken}'> Click link </a>
+          <p>Hello ${name}, Please follow this link to verfiy your account. </p><a href= 'http://localhost:3000/api/v1/auth/verfiy/${plainVerfiyToken}'> Click link </a>
           <p>If you did not verfiy your account you won't be able to use a lot of website features</p>`,
   };
   await sendEmailToUser(info);

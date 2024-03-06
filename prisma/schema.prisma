@@ -42,7 +42,7 @@ model FollowRelation {
 model Profile {
   id      Int     @id @default(autoincrement())
   userId  Int     @unique
-  bio     String
+  bio     String      @default("Not bio yet.")
   image   String?
   city    String
   website String?
