@@ -13,6 +13,7 @@ const prisma = new PrismaClient();
 const createStory = asyncHandler(async (req, res, next) => {
   const { privacy } = req.body;
   const img = req.file;
+  if (!img) return next(new APIError("Story pic is required", 400));
   const url = await uploader(img.path);
   fs.unlinkSync(img.path);
   const story = await prisma.story.create({

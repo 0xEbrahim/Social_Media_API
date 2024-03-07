@@ -19,7 +19,6 @@ const getUserPosts = asyncHandler(async (req, res, next) => {
     },
     skip: skip,
     take: limit,
-    privacy: "PUBLIC",
     orderBy: {
       postedAt: "desc",
     },

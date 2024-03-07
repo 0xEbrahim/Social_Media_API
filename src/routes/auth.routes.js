@@ -25,7 +25,7 @@ import {
 
 router.post("/register", uploadSinglePhoto, registerValidator, register);
 router.post("/login", loginValidator, login);
-router.get("/logout", logout);
+router.get("/logout", authMiddleware, logout);
 router.get("/refresh", refresh);
 router.get("/forgot-password", forgotPasswordValidator, forgotPassword);
 router.patch(

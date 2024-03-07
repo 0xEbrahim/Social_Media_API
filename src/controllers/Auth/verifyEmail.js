@@ -30,7 +30,7 @@ const verifyEmail = asyncHandler(async (req, res, next) => {
       emailVerified: true,
     },
   });
-  res.status.json({ status: "Success", message: "Email verfied." });
+  res.status(200).json({ status: "Success", message: "Email verfied." });
 });
 
 export { verifyEmail };

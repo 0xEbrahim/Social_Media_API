@@ -1,6 +1,7 @@
+import { PrismaClient } from "@prisma/client";
 import { check } from "express-validator";
 import { validationMiddleware } from "../../middlewares/validation.middleware.js";
-
+const prisma = new PrismaClient();
 const registerValidator = [
   check("name")
     .isLength({ min: 5 })
@@ -11,7 +12,15 @@ const registerValidator = [
     .notEmpty()
     .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Please Enter a valid Email"),
+    .withMessage("Please Enter a valid Email")
+    .custom(async (value) => {
+      const exists = await prisma.user.findUnique({
+        where: {
+          email: value,
+        },
+      });
+      if (exists) throw new Error("Another user is using this email.");
+    }),
   check("password")
     .isLength({
       min: 8,
@@ -35,7 +44,15 @@ const loginValidator = [
     .notEmpty()
     .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Please Enter a valid Email"),
+    .withMessage("Please Enter a valid Email")
+    .custom(async (value) => {
+      const exists = await prisma.user.findUnique({
+        where: {
+          email: value,
+        },
+      });
+      if (!exists) throw new Error("wrong email or password.");
+    }),
   check("password").notEmpty().withMessage("password is required"),
   validationMiddleware,
 ];
@@ -57,7 +74,15 @@ const forgotPasswordValidator = [
     .notEmpty()
     .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Please Enter a valid Email"),
+    .withMessage("Please Enter a valid Email")
+    .custom(async (value) => {
+      const exists = await prisma.user.findUnique({
+        where: {
+          email: value,
+        },
+      });
+      if (!exists) throw new Error("not user is using this email.");
+    }),
   validationMiddleware,
 ];
 
@@ -66,7 +91,15 @@ const resetPasswordValidator = [
     .notEmpty()
     .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Please Enter a valid Email"),
+    .withMessage("Please Enter a valid Email")
+    .custom(async (value) => {
+      const exists = await prisma.user.findUnique({
+        where: {
+          email: value,
+        },
+      });
+      if (!exists) throw new Error("no user is using this email.");
+    }),
   check("password")
     .isLength({
       min: 8,
@@ -91,7 +124,10 @@ const verifyResetPasswordValidator = [
 ];
 
 const verifyEmailValidator = [
-  check("token").notEmpty().withMessage("Token is required"),
+  check("token")
+    .notEmpty()
+    .withMessage("Token is required") 
+    ,
   validationMiddleware,
 ];
 export {

@@ -5,8 +5,22 @@ import {
   getAllFollowers,
   getAllFollowings,
 } from "../controllers/Follow/follow.index.js";
+import {
+  followOrUnfollowValidator,
+  getAllFollowersValidator,
+} from "../utils/validation/follow.validator.js";
 const router = express.Router();
-router.post("/:userId", authMiddleware, followOrUn);
-router.get("/followers", authMiddleware, getAllFollowers);
-router.get("/followings", authMiddleware, getAllFollowings);
+router.post("/:userId", authMiddleware, followOrUnfollowValidator, followOrUn);
+router.get(
+  "/followers",
+  authMiddleware,
+  getAllFollowersValidator,
+  getAllFollowers
+);
+router.get(
+  "/followings",
+  authMiddleware,
+  getAllFollowersValidator,
+  getAllFollowings
+);
 export default router;

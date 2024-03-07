@@ -9,14 +9,21 @@ const prisma = new PrismaClient();
  * @route   /api/v1/user/:id
  */
 const deactiveAccount = asyncHandler(async (req, res, next) => {
-  const deletedUser = await prisma.user.delete({
+  const deletedUser = await prisma.user.update({
     where: {
       id: +req.user.id,
     },
+    data: {
+      isActive: false,
+      emailVerified: false,
+    },
   });
+  if (!deletedUser)
+    return next(new APIError("Error while deactivating your account", 500));
   res.clearCookie("refreshToken", {
     httpOnly: true,
   });
+
   res.status(200).json({
     status: "Success",
     message: "Account deactivated and you had been logged-out.",
