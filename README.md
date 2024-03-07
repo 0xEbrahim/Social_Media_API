@@ -47,7 +47,10 @@
    npm init
    # or
    yarn init
-3. **Setting up env variables**<br>
+3. **Install depends**
+   ```bash
+      npm install
+5. **Setting up env variables**<br>
    - **Please first specifiy your database engine**
     ```properties
     ## PORT
